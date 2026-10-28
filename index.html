@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>একটি বিশেষ চিঠি তোমার জন্য ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        /* খামের স্টাইল */
+        .envelope-wrapper {
+            cursor: pointer;
+            position: relative;
+            animation: bounce 2s infinite;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #ff4b6e;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #ff2a51;
+            transform-origin: top;
+            transition: transform 0.4s ease-in-out;
+            z-index: 3;
+        }
+
+        /* খামের ফ্ল্যাপ খোলার অ্যানিমেশন */
+        .envelope-wrapper.open .envelope::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .heart-seal {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            clip-path: polygon(50% 15%, 100% 0%, 100% 70%, 50% 100%, 0% 70%, 0% 0%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            z-index: 4;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: opacity 0.3s;
+        }
+
+        .envelope-wrapper.open .heart-seal {
+            opacity: 0;
+        }
+
+        .instruction {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* চিঠির স্টাইল */
+        .letter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 320px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 2;
+            transition: all 0.5s ease-in-out;
+            opacity: 0;
+        }
+
+        .envelope-wrapper.open .letter {
+            transform: translate(-50%, -150px) scale(1);
+            opacity: 1;
+            z-index: 5;
+        }
+
+        .letter h2 {
+            color: #ff2a51;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .letter p {
+            color: #444;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background: #ff2a51;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255,42,81,0.3);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="heart-seal">❤️</div>
+            </div>
+            <div class="instruction">💌 খামটি খুলতে এখানে ট্যাপ করো!</div>
+            
+            <!-- চিঠি -->
+            <div class="letter">
+                <h2>আমার প্রিয় পাগলি... ❤️</h2>
+                <p>
+                    অনেক বড় ভুল হয়ে গেছে, আমাকে ক্ষমা করে দাও প্লিজ! তোমার মন খারাপ থাকলে আমার একটুও ভালো লাগে না। বিশ্বাস করো, তোমাকে কষ্ট দেওয়ার কোনো ইচ্ছাই আমার ছিল না। 
+                    <br><br>
+                    কথা দিচ্ছি, **আর কখনো এমন ভুল হবে না!** তুমি আমার কাছে অনেক বেশি দামি। এখন একটা মিষ্টি হাসি দিয়ে রাগটা একেবারে ধুয়ে মুছে ফেলো তো! খুব ভালোবাসি তোমাকে! 💖
+                </p>
+                <button class="close-btn" onclick="resetEnvelope(event)">বন্ধ করো</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            const wrapper = document.getElementById('envelopeWrapper');
+            wrapper.classList.add('open');
+        }
+
+        function resetEnvelope(event) {
+            event.stopPropagation(); // যাতে খাম আবার বন্ধ না হয়ে যায় একসাথে
+            const wrapper = document.getElementById('envelopeWrapper');
+            wrapper.classList.remove('open');
+        }
+    </script>
+
+</body>
+</html>
